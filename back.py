@@ -3,8 +3,19 @@ import sqlite3
 from pydantic import BaseModel
 import bcrypt
 from typing import List, Dict
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["http://127.0.0.1:5500", "http://localhost:5500"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 conn = sqlite3.connect("mem.db")
 cur = conn.cursor()
@@ -49,7 +60,7 @@ def delAcc(username):
 
 
 def delSet(name):
-    conn = sqlite3.connect("cards.db")
+    conn = sqlite3.connect("cardset.db")
     cur = conn.cursor()
     cur.execute(f"DROP TABLE IF EXISTS {name}")
     conn.commit()
@@ -57,7 +68,7 @@ def delSet(name):
 
 
 def changeSet(num, term, definition, name, newName):
-    conn = sqlite3.connect("cards.db")
+    conn = sqlite3.connect("cardset.db")
     cur = conn.cursor()
     cur.execute(f"UPDATE {name} SET term = ? WHERE id=?", (term, num))
     cur.execute(f"UPDATE {name} SET definition = ? WHERE id=?", (definition, num))
@@ -79,6 +90,7 @@ class Card(BaseModel):
 
 class CardSet(BaseModel):
     title: str
+    user: str
     cards: List[Card]
 
 
@@ -110,26 +122,38 @@ def pdelAcc(acc: Acc):
 
 @app.post("/post/createSet")
 def createSet(cardset: CardSet):
-    conn = sqlite3.connect("cards.db")
+    conn = sqlite3.connect("cardset.db")
     cur = conn.cursor()
+
     cur.execute(
-        f"CREATE TABLE IF NOT EXISTS {cardset.title} (id INTEGER PRIMARY KEY , term TEXT UNIQUE NOT NULL, definition TEXT NOT NULL);"
+        f"CREATE TABLE IF NOT EXISTS {cardset.user} (id INTEGER, title TEXT , term TEXT NOT NULL, definition TEXT NOT NULL);"
     )
     conn.commit()
-    conn.close
+
+    cur.execute(f"SELECT id FROM {cardset.user}")
+    row = cur.fetchall()
+    if row != []:
+        idNum = row[len(row) - 1][0] + 1
+
+    else:
+        idNum = 1
+    conn.commit()
+    cur.execute(f"DELETE FROM {cardset.user} WHERE title=?", (cardset.title,))
     cur = conn.cursor()
     try:
         for card in cardset.cards:
             cur.execute(
-                f"INSERT INTO {cardset.title} (id,term,definition) VALUES(?,?,?)",
-                (card.num, card.term, card.definition),
+                f"INSERT INTO {cardset.user} (id,title,term,definition) VALUES(?,?,?,?)",
+                (idNum, cardset.title, card.term, card.definition),
             )
         conn.commit()
         conn.close()
-    except ():
+    except Exception as e:
+        print(e)
         print("Failed")
         return
     else:
+
         print("Saved")
     return
 
@@ -144,3 +168,22 @@ def pchangeSet(cardSet: CardSetC):
     for card in cardSet.cards:
         print(card.num, card.term, card.definition, cardSet.title, cardSet.newTitle)
         changeSet(card.num, card.term, card.definition, cardSet.title, cardSet.newTitle)
+
+
+@app.get("/get/viewCard")
+def viewCard(user: str):
+    conn = sqlite3.connect("cardset.db")
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM {user}")
+    rows = cur.fetchall()
+    lastrow = -10000
+    obj = {}
+    for i, row in enumerate(rows):
+
+        if row[0] == lastrow:
+            obj[row[1]][row[2]] = row[3]
+        else:
+            obj[row[1]] = {row[2]: row[3]}
+        lastrow = row[0]
+    print(obj)
+    return obj
