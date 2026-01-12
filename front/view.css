@@ -1,20 +1,122 @@
-body{
+/* Page background */
+body {
     background-color: rgb(54, 101, 107);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 20px;
 }
-.setDiv{
+
+/* Flashcard set container */
+.setDiv {
     background-color: rgb(117, 176, 111);
-    width:90%;
-    height:200px;
-    max-width:1000px;
-    height:200px
+    width: 60%;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 19px auto;
+
+    /* NEW */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.cardDiv{
-    display:flex;
+
+.setDiv:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Title + card count row */
+.titleDiv {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.numDiv {
+    color: #eaf6f4;
+    font-size: 0.9rem;
+}
+
+/* Individual card */
+.cardDiv {
+    display: flex;
     flex-direction: column;
-    background-color:rgb(255, 255, 255);
-    width:90%;
-    height:200px;
-    max-width:1000px;
-    height:200px;
+    background-color: #ffffff;
+    width: 70%;
+    min-height: 160px;
+    margin-bottom: 15px;
+    margin-top:15px;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Hover effect */
+.cardDiv:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+/* Term text */
+.termDiv {
+    font-size: 1.3rem;
+    font-weight: bold;
     margin-bottom: 10px;
+    color: #2c3e3e;
+}
+
+/* Definition text */
+.defDiv {
+    font-size: 1rem;
+    color: #4a4a4a;
+    line-height: 1.4;
+}
+.view-switch {
+    display: none;
+    background-color: #1f4f52;
+    padding: 6px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Buttons */
+#FlashCardView,
+#TestView {
+    padding: 10px 26px;
+    border: none;
+    border-radius: 24px;
+    background-color: transparent;
+    color: #eaf6f7;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+/* Hover */
+#FlashCardView:hover,
+#TestView:hover {
+    background-color: rgba(255,255,255,0.15);
+}
+
+/* Active view (JS adds class="active") */
+#FlashCardView.active,
+#TestView.active {
+    background-color: #ffffff;
+    color: #1f4f52;
+    font-weight: bold;
+    transform: translateY(-1px);
+}
+
+/* Click press */
+#FlashCardView:active,
+#TestView:active {
+    transform: translateY(0);
+}
+#CardContainer{
+ 
 }

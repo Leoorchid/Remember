@@ -1,7 +1,11 @@
 setHolder = document.getElementById("setholder")
 viewHolder = document.getElementById("viewholder")
+testViewBtn = document.getElementById("TestView")
+FlashCardView = document.getElementById("FlashCardView")
+viewSwitchDiv = document.querySelector(".view-switch")
+cardContainer = document.getElementById("CardContainer")
 
-
+console.log(viewSwitchDiv)
 async function loadSet(user = "Leo") {
     const re = await fetch(`http://127.0.0.1:8000/get/viewCard?user=${user}`)
     const data = await re.json()
@@ -15,20 +19,20 @@ function viewCardPreview(data) {
         const length = Object.keys(data[key]).length
         console.log(length)
 
-        setDiv = document.createElement("div")
+        const setDiv = document.createElement("div")
         setDiv.className = "setDiv"
         setDiv.addEventListener("click", () => {
             setHolder.style.display = "none"
-            viewHolder.style.display = "block"
+            viewSwitchDiv.style.display = "inline-flex"
             viewCard(data[key], key)
         })
 
-        titleDiv = document.createElement("div")
+        const titleDiv = document.createElement("div")
         titleDiv.className = "titleDiv"
         titleDiv.innerText = key
         setDiv.append(titleDiv)
 
-        numDiv = document.createElement("div")
+        const numDiv = document.createElement("div")
         numDiv.className = "numDiv"
         numDiv.innerText = length
         setDiv.append(numDiv)
@@ -39,23 +43,30 @@ function viewCardPreview(data) {
 }
 
 function viewCard(data, title) {
+
     for (const key in data) {
-        cardDiv = document.createElement("div")
+        const cardDiv = document.createElement("div")
         cardDiv.className = "cardDiv"
 
 
-        termDiv = document.createElement("div")
+        const termDiv = document.createElement("div")
         termDiv.className = "termDiv"
         termDiv.innerText = key
         cardDiv.append(termDiv)
 
-        defDiv = document.createElement("div")
+        const defDiv = document.createElement("div")
         defDiv.className = "defDiv"
         defDiv.innerText = data[key]
 
         cardDiv.append(defDiv)
+        cardContainer.append(cardDiv)
 
-        viewHolder.append(cardDiv)
+
+        testViewBtn.addEventListener("click", () => {
+            cardContainer.style.display = "none"
+            //DO NEXT randomize test sheet
+
+        })
 
 
     }
@@ -64,6 +75,9 @@ function viewCard(data, title) {
 
 
 }
+
+
+
 
 
 
