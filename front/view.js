@@ -103,6 +103,7 @@ function viewCard(data, title) {
             let a1D = document.createElement("div")
             let a1 = document.createElement("input")
             a1.type = "radio"
+            a1.name = term
             let a1L = document.createElement("label")
             
 
@@ -112,6 +113,7 @@ function viewCard(data, title) {
             let a2D = document.createElement("div")
             let a2 = document.createElement("input")
             a2.type = "radio"
+            a2.name = term
             let a2L = document.createElement("label")
 
             
@@ -122,6 +124,7 @@ function viewCard(data, title) {
             let a3D = document.createElement("div")
             let a3 = document.createElement("input")
             a3.type = "radio"
+            a3.name = term
             let a3L = document.createElement("label")
 
            
@@ -131,6 +134,7 @@ function viewCard(data, title) {
             let a4D = document.createElement("div")
             let a4 = document.createElement("input")
             a4.type = "radio"
+            a4.name = term
             let a4L = document.createElement("label")
 
             
@@ -189,7 +193,16 @@ function viewCard(data, title) {
             
 
         });
+            submitTestBtn = document.createElement("button")
+            submitTestBtn.style.width = "10%"
+            submitTestBtn.style.height = "10%"
+            submitTestBtn.innerText = "Submit"
+            submitTestBtn.id = "submitTestBtn"
+            document.body.append(submitTestBtn)
 
+            submitTestBtn.addEventListener("click",()=>{
+                
+            })
 
     })
 
