@@ -1,11 +1,11 @@
-setHolder = document.getElementById("setholder")
-viewHolder = document.getElementById("viewholder")
-testViewBtn = document.getElementById("TestView")
-FlashCardView = document.getElementById("FlashCardView")
-viewSwitchDiv = document.querySelector(".view-switch")
-cardContainer = document.getElementById("CardContainer")
+const setHolder = document.getElementById("setholder")
+const viewHolder = document.getElementById("viewholder")
+const testViewBtn = document.getElementById("TestView")
+const FlashCardView = document.getElementById("FlashCardView")
+const viewSwitchDiv = document.querySelector(".view-switch")
+const cardContainer = document.getElementById("CardContainer")
 
-console.log(viewSwitchDiv)
+
 async function loadSet(user = "Leo") {
     const re = await fetch(`http://127.0.0.1:8000/get/viewCard?user=${user}`)
     const data = await re.json()
@@ -17,7 +17,7 @@ async function loadSet(user = "Leo") {
 function viewCardPreview(data) {
     for (const key in data) {
         const length = Object.keys(data[key]).length
-        console.log(length)
+        
 
         const setDiv = document.createElement("div")
         setDiv.className = "setDiv"
@@ -67,12 +67,13 @@ function viewCard(data, title) {
 
     }
 
+    //Make Test
     testViewBtn.addEventListener("click", () => {
+        console.log("running test")
         cardContainer.style.display = "none"
         let arrTerms = []
         let arrDefs = []
-        //DO NEXT randomize test sheet
-        i =1
+        let i = 1
         for(const key in data){
             
             arrTerms.push(key)
@@ -84,14 +85,29 @@ function viewCard(data, title) {
 
 
 
-        //-----------------
+        //----------------
 
         const testSheet = document.createElement("div")
         document.body.append(testSheet)
+        let rightArr = {}
+        let tempArrTerms = arrTerms.slice()
+        
 
-        arrTerms.forEach(term => {
+        let copyArrTerms = []
+        lengthOftemp = tempArrTerms.length
+        for(let i =0;i<lengthOftemp;i++){
+            let rng = Math.ceil(Math.random()*tempArrTerms.length-1)
+            copyArrTerms.push(tempArrTerms.splice(rng,1))
+            
+        }
+        
+        
+        copyArrTerms.forEach(term => {
             let defs = [data[term]]
             let copyDefs = arrDefs.slice()
+            rightArr[term] = data[term]
+            
+            
             
             let questionDiv = document.createElement("div")
 
@@ -99,7 +115,7 @@ function viewCard(data, title) {
             let question = document.createElement("div")
             question.innerText = term
 
-            field = document.createElement("fieldset")
+            let field = document.createElement("fieldset")
             let a1D = document.createElement("div")
             let a1 = document.createElement("input")
             a1.type = "radio"
@@ -144,6 +160,7 @@ function viewCard(data, title) {
             let rng 
             while(true){
                 rng = copyDefs.splice(Math.ceil(Math.random()*copyDefs.length)-1,1)
+
                 if(rng!=data[term]){
                     defs.push(rng[0])
                     break
@@ -163,17 +180,26 @@ function viewCard(data, title) {
                     break
                 }
             }
+           
+            a = defs.pop(Math.ceil(Math.random()*defs.length-1))
+            b = defs.pop(Math.ceil(Math.random()*defs.length-1))
+            c = defs.pop(Math.ceil(Math.random()*defs.length-1))
+            d = defs.pop(Math.ceil(Math.random()*defs.length-1))
 
-            a1L.innerText = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            a2L.innerText = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            a3L.innerText = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            a4L.innerText = defs.pop(Math.ceil(Math.random()*defs.length-1))
+            a1L.innerText = a
+            a1.value = a
+            a2L.innerText = b
+            a2.value = b
+            a3L.innerText = c
+            a3.value = c
+            a4L.innerText = d
+            a4.value = d
             
             
             
             
 
-            console.log(defs)
+           
                 
                 
                 
@@ -193,7 +219,7 @@ function viewCard(data, title) {
             
 
         });
-            submitTestBtn = document.createElement("button")
+            let submitTestBtn = document.createElement("button")
             submitTestBtn.style.width = "10%"
             submitTestBtn.style.height = "10%"
             submitTestBtn.innerText = "Submit"
@@ -201,6 +227,13 @@ function viewCard(data, title) {
             document.body.append(submitTestBtn)
 
             submitTestBtn.addEventListener("click",()=>{
+                let picks = document.querySelectorAll("input:checked")
+                
+                for(const pick of picks){
+                    console.log(pick.innerText)
+
+                }
+                
                 
             })
 
@@ -211,7 +244,9 @@ function viewCard(data, title) {
 
 
 
-
+function bebe(){
+    return
+}
 
 
 loadSet()
