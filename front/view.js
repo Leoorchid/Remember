@@ -17,7 +17,7 @@ async function loadSet(user = "Leo") {
 function viewCardPreview(data) {
     for (const key in data) {
         const length = Object.keys(data[key]).length
-        
+
 
         const setDiv = document.createElement("div")
         setDiv.className = "setDiv"
@@ -62,7 +62,7 @@ function viewCard(data, title) {
         cardContainer.append(cardDiv)
 
 
-        
+
 
 
     }
@@ -74,14 +74,15 @@ function viewCard(data, title) {
         let arrTerms = []
         let arrDefs = []
         let i = 1
-        for(const key in data){
-            
+        //getting terms and defs
+        for (const key in data) {
+
             arrTerms.push(key)
             arrDefs.push(data[key])
-            
+
         }
-        
-        
+
+
 
 
 
@@ -91,24 +92,26 @@ function viewCard(data, title) {
         document.body.append(testSheet)
         let rightArr = {}
         let tempArrTerms = arrTerms.slice()
-        
 
+        //Randomizes the terms
         let copyArrTerms = []
         lengthOftemp = tempArrTerms.length
-        for(let i =0;i<lengthOftemp;i++){
-            let rng = Math.ceil(Math.random()*tempArrTerms.length-1)
-            copyArrTerms.push(tempArrTerms.splice(rng,1))
-            
+        for (let i = 0; i < lengthOftemp; i++) {
+            let rng = Math.ceil(Math.random() * tempArrTerms.length - 1)
+            copyArrTerms.push(tempArrTerms.splice(rng, 1))
+
         }
-        
-        
+
+
+
         copyArrTerms.forEach(term => {
+            //array of defs for that question
             let defs = [data[term]]
             let copyDefs = arrDefs.slice()
             rightArr[term] = data[term]
-            
-            
-            
+
+
+            //button html/css
             let questionDiv = document.createElement("div")
 
 
@@ -121,7 +124,7 @@ function viewCard(data, title) {
             a1.type = "radio"
             a1.name = term
             let a1L = document.createElement("label")
-            
+
 
             a1D.append(a1)
             a1D.append(a1L)
@@ -132,7 +135,7 @@ function viewCard(data, title) {
             a2.name = term
             let a2L = document.createElement("label")
 
-            
+
 
             a2D.append(a2)
             a2D.append(a2L)
@@ -143,7 +146,7 @@ function viewCard(data, title) {
             a3.name = term
             let a3L = document.createElement("label")
 
-           
+
 
             a3D.append(a3)
             a3D.append(a3L)
@@ -153,57 +156,62 @@ function viewCard(data, title) {
             a4.name = term
             let a4L = document.createElement("label")
 
-            
-            
-            
-            
-            let rng 
-            while(true){
-                rng = copyDefs.splice(Math.ceil(Math.random()*copyDefs.length)-1,1)
 
-                if(rng!=data[term]){
-                    defs.push(rng[0])
-                    break
-                } 
-            }
-            while(true){
-                rng = copyDefs.splice(Math.ceil(Math.random()*copyDefs.length)-1,1)
-                if(rng!=data[term]){
-                    defs.push(rng[0])
-                    break
-                }   
-            }
-            while(true){
-                rng = copyDefs.splice(Math.ceil(Math.random()*copyDefs.length)-1,1)
-                if(rng!=data[term]){
+
+
+            // randomizes the wrong anwsers
+            let rng
+            while (true) {
+                rng = copyDefs.splice(Math.ceil(Math.random() * copyDefs.length) - 1, 1)
+                console.log(rng)
+
+                if (rng != data[term]) {
                     defs.push(rng[0])
                     break
                 }
             }
-           
-            a = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            b = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            c = defs.pop(Math.ceil(Math.random()*defs.length-1))
-            d = defs.pop(Math.ceil(Math.random()*defs.length-1))
+            while (true) {
+                rng = copyDefs.splice(Math.ceil(Math.random() * copyDefs.length) - 1, 1)
+                if (rng != data[term]) {
+                    defs.push(rng[0])
+                    break
+                }
+            }
+            while (true) {
+                rng = copyDefs.splice(Math.ceil(Math.random() * copyDefs.length) - 1, 1)
+                if (rng != data[term]) {
+                    defs.push(rng[0])
+                    break
+                }
+            }
 
-            a1L.innerText = a
-            a1.value = a
-            a2L.innerText = b
-            a2.value = b
-            a3L.innerText = c
-            a3.value = c
-            a4L.innerText = d
-            a4.value = d
-            
-            
-            
-            
+            a = defs.pop(Math.ceil(Math.random() * defs.length - 1))
+            b = defs.pop(Math.ceil(Math.random() * defs.length - 1))
+            c = defs.pop(Math.ceil(Math.random() * defs.length - 1))
+            d = defs.pop(Math.ceil(Math.random() * defs.length - 1))
 
-           
-                
-                
-                
-            
+            let valueRand = shuffleArray([a, b, c, d])
+
+
+
+            a1L.innerText = valueRand[0]
+            a1.value = valueRand[0]
+            a2L.innerText = valueRand[1]
+            a2.value = valueRand[1]
+            a3L.innerText = valueRand[2]
+            a3.value = valueRand[2]
+            a4L.innerText = valueRand[3]
+            a4.value = valueRand[3]
+
+
+
+
+
+
+
+
+
+
 
             a4D.append(a4)
             a4D.append(a4L)
@@ -215,40 +223,39 @@ function viewCard(data, title) {
             field.append(a4D)
             questionDiv.append(field)
 
-            
+
             testSheet.append(questionDiv)
-            
+
 
         });
-            let submitTestBtn = document.createElement("button")
-            submitTestBtn.style.width = "10%"
-            submitTestBtn.style.height = "10%"
-            submitTestBtn.innerText = "Submit"
-            submitTestBtn.style.display = "block"
-            testSheet.append(submitTestBtn)
-            submitTestBtn.id = "submitTestBtn"
-            
+        let submitTestBtn = document.createElement("button")
+        submitTestBtn.style.width = "10%"
+        submitTestBtn.style.height = "10%"
+        submitTestBtn.innerText = "Submit"
+        submitTestBtn.style.display = "block"
+        testSheet.append(submitTestBtn)
+        submitTestBtn.id = "submitTestBtn"
 
-            submitTestBtn.addEventListener("click",()=>{
-                let picks = document.querySelectorAll("input:checked")
-                numRight = 0
-                for(const pick of picks){
-                    console.log(pick.value)
-                    if (rightArr[pick.name]==pick.value)
-                    {
-                        
-                        numRight++
-                        
-                    }
-                console.log(numRight)
+
+        submitTestBtn.addEventListener("click", () => {
+            let picks = document.querySelectorAll("input:checked")
+            numRight = 0
+            for (const pick of picks) {
+                console.log(pick.value)
+                if (rightArr[pick.name] == pick.value) {
+
+                    numRight++
 
                 }
+                console.log(numRight)
 
-                testSheet.style.display = "none"
-                console.log(`SCORE: ${NnumRight }`)
-                
-                
-            })
+            }
+
+            testSheet.style.display = "none"
+            console.log(`SCORE: ${numRight}`)
+
+
+        })
 
     })
 
@@ -257,8 +264,13 @@ function viewCard(data, title) {
 
 
 
-function sumbit(){
-    return
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]
+        return array
+    }
 }
 
 
