@@ -215,7 +215,8 @@ function viewCard(data, title) {
             field.append(a4D)
             questionDiv.append(field)
 
-            document.body.append(questionDiv)
+            
+            testSheet.append(questionDiv)
             
 
         });
@@ -223,16 +224,28 @@ function viewCard(data, title) {
             submitTestBtn.style.width = "10%"
             submitTestBtn.style.height = "10%"
             submitTestBtn.innerText = "Submit"
+            submitTestBtn.style.display = "block"
+            testSheet.append(submitTestBtn)
             submitTestBtn.id = "submitTestBtn"
-            document.body.append(submitTestBtn)
+            
 
             submitTestBtn.addEventListener("click",()=>{
                 let picks = document.querySelectorAll("input:checked")
-                
+                numRight = 0
                 for(const pick of picks){
-                    console.log(pick.innerText)
+                    console.log(pick.value)
+                    if (rightArr[pick.name]==pick.value)
+                    {
+                        
+                        numRight++
+                        
+                    }
+                console.log(numRight)
 
                 }
+
+                testSheet.style.display = "none"
+                console.log(`SCORE: ${NnumRight }`)
                 
                 
             })
@@ -244,7 +257,7 @@ function viewCard(data, title) {
 
 
 
-function bebe(){
+function sumbit(){
     return
 }
 
