@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="view.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remember — View</title>
+  <link href="view.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Remember</h1>
-    <div class="view-switch" display="none">
-    <button id="FlashCardView">FlashCard</button>
-    <button id="TestView">Test</button>
-    </div>
-    <div id="CardContainer"></div>
-    
-    <div id="setholder"></div>
-    
-    
 
-    <script src="view.js"></script>
+  <!-- NAV -->
+  <nav>
+    <a href="home.html" class="nav-logo">Remem<span>ber</span></a>
+    <a href="home.html" class="nav-back">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <main class="view-page">
+
+    <div class="page-header">
+      <p class="page-label">✦ Studying</p>
+      <h1>Your <em>Decks</em></h1>
+      <p class="page-subtitle">Choose a card set to study, then pick your mode.</p>
+    </div>
+
+    <!-- View mode switch — shown by JS when a set is selected -->
+    <div class="view-switch" id="viewSwitch">
+      <button id="FlashCardView" class="switch-btn active">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path stroke-linecap="round" d="M8 12h8"/>
+        </svg>
+        Flashcard
+      </button>
+      <button id="TestView" class="switch-btn">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        Test
+      </button>
+    </div>
+
+    <div id="setholder"></div>
+    <div id="CardContainer"></div>
+
+  </main>
+
+  <script src="view.js"></script>
 </body>
 </html>

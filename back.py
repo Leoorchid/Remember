@@ -4,6 +4,12 @@ from pydantic import BaseModel
 import bcrypt
 from typing import List, Dict
 from fastapi.middleware.cors import CORSMiddleware
+from openai import OpenAI
+from openai import OpenAI
+import json
+from dotenv import load_dotenv
+import os
+
 
 app = FastAPI()
 

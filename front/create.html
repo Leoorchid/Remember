@@ -1,26 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="create.css" rel="stylesheet">
-    <title>Document</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Remember — Create</title>
+  <link rel="stylesheet" href="create.css"/>
 </head>
 <body>
-    <div>
-        <h1>Rememeber</h1>
-        <div id="titleDiv">
-            <input id="titleInput" placeholder="Title">
-        </div>
-        <div id="cardSetDiv">
-            
-        </div>
-        <button id="addCardBtn">Add Card</button>
-        <button id="saveBtn">Save</button>
 
+  <!-- NAV -->
+  <nav>
+    <a href="home.html" class="nav-logo">Remem<span>ber</span></a>
+    <a href="home.html" class="nav-back">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <main class="create-page">
+
+    <!-- Header -->
+    <div class="page-header">
+      <p class="page-label">✦ New Card Set</p>
+      <h1>Build your <em>Set</em></h1>
+      <p>Give your set a name, add a description, then fill in your cards below.</p>
     </div>
-<script src="create.js"></script>
-</button>
-</div>
+
+    <!-- Set Details -->
+    <div class="form-section">
+      <div class="form-section-title">
+        <span class="icon">📋</span> Set Details
+      </div>
+
+      <div class="field">
+        <label for="titleInput">Title</label>
+        <input type="text" id="titleInput" placeholder="e.g. Biology Chapter 4 — Cell Division" maxlength="80"/>
+        <div class="field-meta">
+          <span class="char-count" id="titleCount">0 / 80</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="descInput">Description <span style="text-transform:none;font-weight:400;color:#555">(optional)</span></label>
+        <textarea id="descInput" placeholder="What's this set about? Who is it for?" maxlength="240"></textarea>
+        <div class="field-meta">
+          <span class="char-count" id="descCount">0 / 240</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="subjectInput">Subject</label>
+          <select id="subjectInput">
+            <option value="" disabled selected>Choose a subject…</option>
+            <option>Biology</option>
+            <option>Chemistry</option>
+            <option>History</option>
+            <option>Mathematics</option>
+            <option>Literature</option>
+            <option>Computer Science</option>
+            <option>Languages</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="visibilityInput">Visibility</label>
+          <select id="visibilityInput">
+            <option value="private">🔒 Private</option>
+            <option value="public">🌍 Public</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="form-section">
+      <div class="cards-header">
+        <div class="form-section-title" style="margin-bottom:0">
+          <span class="icon">🃏</span> Cards
+        </div>
+        <span class="cards-count" id="cardsCount">0 cards</span>
+      </div>
+
+      <div id="cardSetDiv"></div>
+
+      <button class="btn-add-card" id="addCardBtn" type="button">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/>
+        </svg>
+        Add Card
+      </button>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <a href="home.html"><button class="homeBtn ghost" type="button">Cancel</button></a>
+      <button class="homeBtn primary" type="button" id="saveBtn">Save Card Set</button>
+    </div>
+
+  </main>
+
+  <script src="create.js"></script>
 </body>
 </html>
