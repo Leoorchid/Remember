@@ -4,11 +4,10 @@ from pydantic import BaseModel
 import bcrypt
 from typing import List, Dict
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI
-from openai import OpenAI
 import json
 from dotenv import load_dotenv
 import os
+import re
 
 
 app = FastAPI()
@@ -125,14 +124,22 @@ def pcreateAcc(acc: Acc):
 def pdelAcc(acc: Acc):
     return delAcc(acc.username)
 
+def safe_table_name(name):
+    # only allow letters, numbers, underscores
+    if not re.match(r'^\w+$', name):
+        raise ValueError("Invalid table name")
+    return name
+
+
 
 @app.post("/post/createSet")
 def createSet(cardset: CardSet):
     conn = sqlite3.connect("cardset.db")
     cur = conn.cursor()
 
+
     cur.execute(
-        f"CREATE TABLE IF NOT EXISTS {cardset.user} (id INTEGER, title TEXT , term TEXT NOT NULL, definition TEXT NOT NULL);"
+        f"CREATE TABLE IF NOT EXISTS cardset (id INTEGER, user TEXT, title TEXT , term TEXT NOT NULL, definition TEXT NOT NULL);"
     )
     conn.commit()
 
