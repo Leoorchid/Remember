@@ -4,11 +4,14 @@ from pydantic import BaseModel
 import bcrypt
 from typing import List, Dict
 from fastapi.middleware.cors import CORSMiddleware
+<<<<<<< HEAD
 import json
 from dotenv import load_dotenv
 import os
 import re
 
+=======
+>>>>>>> parent of d8a33b2 (Style change)
 
 app = FastAPI()
 

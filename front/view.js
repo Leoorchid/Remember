@@ -5,15 +5,13 @@ const FlashCardView = document.getElementById("FlashCardView")
 const viewSwitchDiv = document.querySelector(".view-switch")
 const cardContainer = document.getElementById("CardContainer")
 
-let longtermD = {}
+
 async function loadSet(user = "Leo") {
     const re = await fetch(`http://127.0.0.1:8000/get/viewCard?user=${user}`)
     const data = await re.json()
     console.log(data)
 
     viewCardPreview(data)
-
-
 }
 
 function viewCardPreview(data) {
@@ -47,7 +45,6 @@ function viewCardPreview(data) {
 function viewCard(data, title) {
 
     for (const key in data) {
-        longtermD = data
         const cardDiv = document.createElement("div")
         cardDiv.className = "cardDiv"
 
@@ -70,44 +67,8 @@ function viewCard(data, title) {
 
     }
 
-    FlashCardView.addEventListener("click", () => {
-        if (document.querySelector(".scoreSheet")) {
-
-
-            scoreSheet.remove()
-            scoreSheet = null
-        }
-        if (document.querySelector(".testSheet")) {
-
-            testSheet.remove()
-            testSheet = null
-            testViewBtn.classList.remove("active")
-            FlashCardView.classList.add("active")
-        }
-
-        cardContainer.style.display = "block"
-
-
-
-
-    })
-
     //Make Test
     testViewBtn.addEventListener("click", () => {
-        testViewBtn.classList.add("active")
-        FlashCardView.classList.remove("active")
-
-        if (document.querySelector(".scoreSheet")) {
-
-
-            scoreSheet.remove()
-            scoreSheet = null
-        }
-        if (document.querySelector(".testSheet")) {
-
-            testSheet.remove()
-            testSheet = null
-        }
         console.log("running test")
         cardContainer.style.display = "none"
         let arrTerms = []
@@ -127,8 +88,7 @@ function viewCard(data, title) {
 
         //----------------
 
-        testSheet = document.createElement("div")
-        testSheet.className = "testSheet"
+        const testSheet = document.createElement("div")
         document.body.append(testSheet)
         let rightArr = {}
         let tempArrTerms = arrTerms.slice()
@@ -246,6 +206,13 @@ function viewCard(data, title) {
 
 
 
+
+
+
+
+
+
+
             a4D.append(a4)
             a4D.append(a4L)
 
@@ -286,12 +253,6 @@ function viewCard(data, title) {
 
             testSheet.style.display = "none"
             console.log(`SCORE: ${numRight}`)
-            scoreSheet = document.createElement("div")
-            scoreSheet.classList.add("scoreSheet")
-            scoreSheet.innerText = `${numRight}/${picks.length}\n${(numRight/picks.length)*100}%`
-
-            document.body.appendChild(scoreSheet)
-
 
 
         })
@@ -311,9 +272,6 @@ function shuffleArray(array) {
         return array
     }
 }
-
-// Add Learing tab and a matching game tab
-// clean up transitions 
 
 
 loadSet()
